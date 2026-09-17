@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>COMP5241 学习看板</title>
+<meta name="description" content="COMP5241 课程的任务管理、专注计时与每周学习时长看板。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@300;400;500;600;700&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5A2.5 2.5 0 0 1 4 20.5z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5 9 17.5 20 6.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5 19 12 7 19.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 1 3 6.2"/><path d="M4 20v-5h5"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3s5 4.2 5 8.6a5 5 0 0 1-10 0C7 9.9 8.6 8.3 9.7 7c.5 1 1 1.6 1.7 2.1C12.2 7.4 12 5.2 12 3z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 20v-6M12.5 20v-9M17 20v-4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4.5 21 20H3z"/><path d="M12 10v4.5M12 17.2v.05"/></symbol>
+  <symbol id="i-task" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5 11 15l4.5-5"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand__mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-book"></use></svg></span>
+    <h1 class="brand__text">
+      <span class="brand__course">COMP5241</span>
+      <small>学习看板</small>
+    </h1>
+  </div>
+
+  <div class="app-header__meta">
+    <p class="today" id="today-label">—</p>
+    <button type="button" class="icon-btn" id="theme-toggle" aria-pressed="false">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-moon" id="theme-icon"></use></svg>
+      <span class="sr-only" id="theme-toggle-label">切换到深色模式</span>
+    </button>
+  </div>
+</header>
+
+<main class="layout" id="main">
+
+  <section class="panel panel--stats" aria-labelledby="stats-heading">
+    <div class="panel__head">
+      <h2 id="stats-heading">今日概览</h2>
+      <p class="panel__hint" id="stats-hint">数据保存在本机浏览器中</p>
+    </div>
+
+    <div class="stats">
+      <article class="stat">
+        <span class="stat__icon stat__icon--primary" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-task"></use></svg></span>
+        <p class="stat__value" id="stat-open">0</p>
+        <p class="stat__label">待完成任务</p>
+      </article>
+      <article class="stat">
+        <span class="stat__icon stat__icon--success" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"></use></svg></span>
+        <p class="stat__value" id="stat-done">0</p>
+        <p class="stat__label">已完成任务</p>
+      </article>
+      <article class="stat">
+        <span class="stat__icon stat__icon--accent" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"></use></svg></span>
+        <p class="stat__value" id="stat-focus">0<span class="stat__unit">分钟</span></p>
+        <p class="stat__label">今日专注</p>
+      </article>
+      <article class="stat">
+        <span class="stat__icon stat__icon--warning" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"></use></svg></span>
+        <p class="stat__value" id="stat-streak">0<span class="stat__unit">天</span></p>
+        <p class="stat__label">连续专注</p>
+      </article>
+    </div>
+
+    <div class="progress">
+      <div class="progress__ring">
+        <svg viewBox="0 0 120 120" role="img" id="progress-ring" aria-label="任务完成率 0%">
+          <circle class="progress__track" cx="60" cy="60" r="50" />
+          <circle class="progress__bar" id="progress-bar" cx="60" cy="60" r="50" />
+        </svg>
+        <span class="progress__value" id="progress-value">0%</span>
+      </div>
+      <div class="progress__copy">
+        <h3>任务完成率</h3>
+        <p id="progress-copy">还没有任务，先添加一个吧。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel panel--tasks" aria-labelledby="tasks-heading">
+    <div class="panel__head">
+      <h2 id="tasks-heading">任务</h2>
+      <p class="panel__hint" id="task-count">—</p>
+    </div>
+
+    <form class="task-form" id="task-form" novalidate>
+      <div class="form-errors" id="form-errors" role="alert" tabindex="-1" hidden>
+        <svg class="ico ico--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"></use></svg>
+        <div>
+          <h3 id="form-errors-title">还有字段需要修改</h3>
+          <ul id="form-errors-list"></ul>
+        </div>
+      </div>
+
+      <div class="field field--grow">
+        <label for="task-title">任务名称 <span class="req" aria-hidden="true">*</span></label>
+        <input id="task-title" name="title" type="text" maxlength="80" autocomplete="off"
+               placeholder="例如：完成 A2 报告初稿" aria-describedby="task-title-hint task-title-error" />
+        <p class="field__hint" id="task-title-hint">一句话描述这一步要做的事，按 <kbd>/</kbd> 可快速跳到此处。</p>
+        <p class="field__error" id="task-title-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="task-course">课程 / 分类</label>
+        <input id="task-course" name="course" type="text" list="course-options" maxlength="24"
+               placeholder="COMP5241" autocomplete="off" aria-describedby="task-course-error" />
+        <datalist id="course-options">
+          <option value="COMP5241"></option>
+          <option value="讲座"></option>
+          <option value="实验"></option>
+          <option value="作业"></option>
+          <option value="复习"></option>
+          <option value="项目"></option>
+          <option value="考试"></option>
+        </datalist>
+        <p class="field__error" id="task-course-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="task-due">截止日期</label>
+        <input id="task-due" name="due" type="date" aria-describedby="task-due-error" />
+        <p class="field__error" id="task-due-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="task-priority">优先级</label>
+        <select id="task-priority" name="priority">
+          <option value="low">低</option>
+          <option value="medium" selected>中</option>
+          <option value="high">高</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn--primary task-form__submit">
+        <svg class="ico ico--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plus"></use></svg>
+        添加任务
+      </button>
+    </form>
+
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="按状态筛选任务">
+        <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">全部</button>
+        <button type="button" class="chip" data-filter="open" aria-pressed="false">未完成</button>
+        <button type="button" class="chip" data-filter="today" aria-pressed="false">今天到期</button>
+        <button type="button" class="chip" data-filter="overdue" aria-pressed="false">已逾期</button>
+        <button type="button" class="chip" data-filter="done" aria-pressed="false">已完成</button>
+      </div>
+      <p class="sr-only" id="filter-status" role="status"></p>
+    </div>
+
+    <ul class="task-list" id="task-list"></ul>
+
+    <div class="empty" id="task-empty" hidden>
+      <span class="empty__icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-task"></use></svg></span>
+      <p class="empty__title" id="empty-title">还没有任务</p>
+      <p class="empty__text" id="empty-text">在上面的表单里添加第一个任务，看板会自动统计进度。</p>
+    </div>
+  </section>
+
+  <section class="panel panel--timer" aria-labelledby="timer-heading">
+    <div class="panel__head">
+      <h2 id="timer-heading">专注计时</h2>
+      <p class="panel__hint">25 分钟专注 · 5 分钟休息</p>
+    </div>
+
+    <div class="timer">
+      <div class="timer__ring">
+        <svg viewBox="0 0 160 160" aria-hidden="true">
+          <circle class="timer__track" cx="80" cy="80" r="68" />
+          <circle class="timer__bar" id="timer-bar" cx="80" cy="80" r="68" />
+        </svg>
+        <div class="timer__readout">
+          <p class="timer__time" id="timer-time">25:00</p>
+          <p class="timer__mode" id="timer-mode">专注中</p>
+        </div>
+      </div>
+
+      <p class="timer__status" id="timer-status" role="status" aria-live="polite">按“开始”进入 25 分钟专注。</p>
+
+      <div class="timer__controls">
+        <button type="button" class="btn btn--primary" id="timer-toggle">
+          <svg class="ico ico--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-play" id="timer-toggle-icon"></use></svg>
+          <span id="timer-toggle-label">开始</span>
+        </button>
+        <button type="button" class="btn btn--ghost" id="timer-reset">
+          <svg class="ico ico--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-reset"></use></svg>
+          重置
+        </button>
+      </div>
+
+      <dl class="timer__stats">
+        <div><dt>今日番茄</dt><dd id="timer-sessions">0</dd></div>
+        <div><dt>本周专注</dt><dd id="timer-week">0 分钟</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="panel panel--chart" aria-labelledby="chart-heading">
+    <div class="panel__head">
+      <h2 id="chart-heading">最近 7 天专注时长</h2>
+      <p class="panel__hint">单位：分钟</p>
+    </div>
+    <div class="chart" id="chart"></div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  <p>COMP5241 学习看板 · 纯静态页面，数据只存在你的浏览器里。</p>
+</footer>
+
+<div class="toast-region" id="toast-region" aria-label="通知" role="region"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

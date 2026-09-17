@@ -1,0 +1,14 @@
+# Local Codex sandbox config (contains absolute paths for this machine only).
+.codex/
+
+# Personal study data exported from the dashboard / notebook.
+study_data.json
+study_log.csv
+
+# OS and Python noise
+.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+venv/
+.venv/
